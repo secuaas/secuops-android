@@ -151,7 +151,7 @@ fun PodCard(pod: PodInfo) {
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
-                </Column>
+                }
 
                 Column(horizontalAlignment = Alignment.End) {
                     Text(

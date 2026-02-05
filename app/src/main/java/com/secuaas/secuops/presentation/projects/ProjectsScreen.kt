@@ -151,7 +151,7 @@ fun ProjectCard(project: Project) {
                             modifier = Modifier.padding(top = 4.dp)
                         )
                     }
-                </Column>
+                }
 
                 Icon(
                     imageVector = Icons.Default.Folder,

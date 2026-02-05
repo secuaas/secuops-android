@@ -146,7 +146,7 @@ data class DeploymentRequest(
     @kotlinx.serialization.SerialName("project_id") val projectId: String,
     @kotlinx.serialization.SerialName("application_name") val applicationName: String,
     val environment: String,
-    @kotlinx.serialization.SerialName("config_overrides") val configOverrides: Map<String, Any> = emptyMap()
+    @kotlinx.serialization.SerialName("config_overrides") val configOverrides: Map<String, String> = emptyMap()
 )
 
 @kotlinx.serialization.Serializable

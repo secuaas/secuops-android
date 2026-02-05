@@ -174,7 +174,7 @@ fun ServerCard(
                             )
                         }
                     }
-                </Column>
+                }
 
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),

@@ -189,7 +189,7 @@ fun DomainRecordCard(
                         label = { Text(record.fieldType) }
                     )
                     Icon(
-                        imageVector = Icons.Default.DnsOutlined,
+                        imageVector = Icons.Default.Dns,
                         contentDescription = "DNS Record",
                         tint = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.size(24.dp)

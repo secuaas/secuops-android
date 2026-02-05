@@ -271,7 +271,7 @@ fun InvoiceCard(invoice: Invoice) {
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
-                </Column>
+                }
 
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),

@@ -168,7 +168,7 @@ fun ApplicationCard(
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
-                </Column>
+                }
 
                 IconButton(onClick = onRestart) {
                     Icon(Icons.Default.RestartAlt, contentDescription = "Restart")

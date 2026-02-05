@@ -133,6 +133,16 @@ class SecuOpsRepository @Inject constructor(
         }
     }
 
+    suspend fun retryDeployment(id: String): Flow<Resource<Deployment>> = flow {
+        emit(Resource.Loading())
+        try {
+            val response = api.retryDeployment(id)
+            handleResponse(response, this)
+        } catch (e: Exception) {
+            emit(Resource.Error(e.localizedMessage ?: "Network error"))
+        }
+    }
+
     // ===================== PROJECTS =====================
 
     suspend fun getProjects(): Flow<Resource<List<Project>>> = flow {
@@ -187,6 +197,53 @@ class SecuOpsRepository @Inject constructor(
         }
     }
 
+    suspend fun getInfrastructure(type: String, namespace: String? = null, environment: String = "dev"): Flow<Resource<List<Any>>> = flow {
+        emit(Resource.Loading())
+        try {
+            val response = when (type) {
+                "pods" -> {
+                    val r = api.getPods(namespace, environment)
+                    if (r.isSuccessful && r.body() != null) {
+                        emit(Resource.Success(r.body() as List<Any>))
+                    } else {
+                        emit(Resource.Error(r.message() ?: "Request failed"))
+                    }
+                    return@flow
+                }
+                "services" -> {
+                    val r = api.getServices(namespace, environment)
+                    if (r.isSuccessful && r.body() != null) {
+                        emit(Resource.Success(r.body() as List<Any>))
+                    } else {
+                        emit(Resource.Error(r.message() ?: "Request failed"))
+                    }
+                    return@flow
+                }
+                "ingresses" -> {
+                    val r = api.getIngresses(namespace, environment)
+                    if (r.isSuccessful && r.body() != null) {
+                        emit(Resource.Success(r.body() as List<Any>))
+                    } else {
+                        emit(Resource.Error(r.message() ?: "Request failed"))
+                    }
+                    return@flow
+                }
+                "certificates" -> {
+                    val r = api.getCertificates(namespace, environment)
+                    if (r.isSuccessful && r.body() != null) {
+                        emit(Resource.Success(r.body() as List<Any>))
+                    } else {
+                        emit(Resource.Error(r.message() ?: "Request failed"))
+                    }
+                    return@flow
+                }
+                else -> emit(Resource.Error("Invalid infrastructure type"))
+            }
+        } catch (e: Exception) {
+            emit(Resource.Error(e.localizedMessage ?: "Network error"))
+        }
+    }
+
     // ===================== DOMAINS =====================
 
     suspend fun getDomains(zone: String? = null): Flow<Resource<List<DomainRecord>>> = flow {
@@ -209,6 +266,26 @@ class SecuOpsRepository @Inject constructor(
         }
     }
 
+    suspend fun getDomainRecords(zone: String? = null): Flow<Resource<List<DomainRecord>>> = flow {
+        emit(Resource.Loading())
+        try {
+            val response = api.getDomains(zone)
+            handleResponse(response, this)
+        } catch (e: Exception) {
+            emit(Resource.Error(e.localizedMessage ?: "Network error"))
+        }
+    }
+
+    suspend fun deleteDomainRecord(zone: String, id: String): Flow<Resource<Unit>> = flow {
+        emit(Resource.Loading())
+        try {
+            val response = api.deleteDomain(id)
+            handleResponse(response, this)
+        } catch (e: Exception) {
+            emit(Resource.Error(e.localizedMessage ?: "Network error"))
+        }
+    }
+
     // ===================== SERVERS =====================
 
     suspend fun getServers(): Flow<Resource<List<Server>>> = flow {
@@ -225,6 +302,26 @@ class SecuOpsRepository @Inject constructor(
         emit(Resource.Loading())
         try {
             val response = api.getServer(id)
+            handleResponse(response, this)
+        } catch (e: Exception) {
+            emit(Resource.Error(e.localizedMessage ?: "Network error"))
+        }
+    }
+
+    suspend fun getServerDetail(id: String): Flow<Resource<ServerDetail>> = flow {
+        emit(Resource.Loading())
+        try {
+            val response = api.getServer(id)
+            handleResponse(response, this)
+        } catch (e: Exception) {
+            emit(Resource.Error(e.localizedMessage ?: "Network error"))
+        }
+    }
+
+    suspend fun rebootServer(id: String): Flow<Resource<Unit>> = flow {
+        emit(Resource.Loading())
+        try {
+            val response = api.rebootServer(id)
             handleResponse(response, this)
         } catch (e: Exception) {
             emit(Resource.Error(e.localizedMessage ?: "Network error"))
