@@ -157,7 +157,7 @@ fun ServerCard(
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
-                    if (server.region.isNotEmpty()) {
+                    if (server.provider.isNotEmpty()) {
                         Spacer(modifier = Modifier.height(4.dp))
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Icon(
@@ -168,7 +168,7 @@ fun ServerCard(
                             )
                             Spacer(modifier = Modifier.width(4.dp))
                             Text(
-                                text = server.region,
+                                text = server.provider,
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
@@ -192,7 +192,7 @@ fun ServerCard(
 
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = server.ipAddress,
+                text = server.ip,
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -213,9 +213,9 @@ fun ServerCard(
                     }
                     is ServerDetailState.Success -> {
                         val detail = detailState.detail
-                        InfoRow("CPU", "${detail.cpu.cores} cores @ ${detail.cpu.frequency}")
-                        InfoRow("RAM", detail.ram)
-                        InfoRow("Disk", detail.disk)
+                        InfoRow("CPU", "${detail.cpu} cores")
+                        InfoRow("RAM", "${detail.ram} GB")
+                        InfoRow("Disk", "${detail.disk} GB")
                         InfoRow("OS", detail.os)
                         InfoRow("Monthly Cost", "${detail.monthlyCost}€")
                         InfoRow("Created", detail.createdAt)

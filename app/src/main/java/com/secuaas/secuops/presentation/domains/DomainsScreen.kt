@@ -186,7 +186,7 @@ fun DomainRecordCard(
                 ) {
                     AssistChip(
                         onClick = {},
-                        label = { Text(record.fieldType) }
+                        label = { Text(record.type) }
                     )
                     Icon(
                         imageVector = Icons.Default.Dns,
@@ -209,10 +209,11 @@ fun DomainRecordCard(
                 HorizontalDivider()
                 Spacer(modifier = Modifier.height(12.dp))
 
-                InfoRow("TTL", "${record.ttl}s")
-                if (record.subDomain.isNotEmpty()) {
-                    InfoRow("Subdomain", record.subDomain)
+                InfoRow("Zone", record.zone)
+                if (record.subdomain.isNotEmpty()) {
+                    InfoRow("Subdomain", record.subdomain)
                 }
+                InfoRow("Created", record.createdAt)
 
                 Spacer(modifier = Modifier.height(12.dp))
                 Row(
@@ -267,6 +268,7 @@ fun DomainRecordCard(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FilterDialog(
     currentZone: String?,

@@ -170,12 +170,12 @@ fun BillingSummaryCard(summary: BillingSummary) {
 
             // Total
             Text(
-                text = "Total",
+                text = "Current Month",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f)
             )
             Text(
-                text = "${summary.totalCost}€",
+                text = "${summary.currentMonth}€",
                 style = MaterialTheme.typography.headlineLarge.copy(
                     fontWeight = FontWeight.Bold
                 ),
@@ -193,12 +193,12 @@ fun BillingSummaryCard(summary: BillingSummary) {
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
-                        text = "Servers",
+                        text = "Last Month",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f)
                     )
                     Text(
-                        text = "${summary.serversCost}€",
+                        text = "${summary.lastMonth}€",
                         style = MaterialTheme.typography.titleMedium.copy(
                             fontWeight = FontWeight.Bold
                         ),
@@ -208,12 +208,12 @@ fun BillingSummaryCard(summary: BillingSummary) {
 
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
-                        text = "Storage",
+                        text = "Year to Date",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f)
                     )
                     Text(
-                        text = "${summary.storageCost}€",
+                        text = "${summary.yearToDate}€",
                         style = MaterialTheme.typography.titleMedium.copy(
                             fontWeight = FontWeight.Bold
                         ),
@@ -223,12 +223,12 @@ fun BillingSummaryCard(summary: BillingSummary) {
 
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
-                        text = "Domains",
+                        text = summary.currency,
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f)
                     )
                     Text(
-                        text = "${summary.domainsCost}€",
+                        text = "${summary.breakdown.values.sum()}€",
                         style = MaterialTheme.typography.titleMedium.copy(
                             fontWeight = FontWeight.Bold
                         ),
@@ -260,7 +260,7 @@ fun InvoiceCard(invoice: Invoice) {
             ) {
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        text = invoice.reference,
+                        text = invoice.invoiceNumber,
                         style = MaterialTheme.typography.titleMedium.copy(
                             fontWeight = FontWeight.Bold
                         )
@@ -293,34 +293,27 @@ fun InvoiceCard(invoice: Invoice) {
                 HorizontalDivider()
                 Spacer(modifier = Modifier.height(12.dp))
 
-                InfoRow("Period", "${invoice.periodStart} - ${invoice.periodEnd}")
-                InfoRow("Due Date", invoice.dueDate)
+                InfoRow("Invoice ID", invoice.id)
+                InfoRow("Currency", invoice.currency)
 
-                if (invoice.description.isNotEmpty()) {
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = invoice.description,
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
-
-                if (invoice.pdfUrl.isNotEmpty()) {
-                    Spacer(modifier = Modifier.height(12.dp))
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.End
-                    ) {
-                        Button(
-                            onClick = { /* TODO: Open PDF */ }
+                invoice.pdfUrl?.let { pdfUrl ->
+                    if (pdfUrl.isNotEmpty()) {
+                        Spacer(modifier = Modifier.height(12.dp))
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.End
                         ) {
-                            Icon(
-                                Icons.Default.PictureAsPdf,
-                                contentDescription = null,
-                                modifier = Modifier.size(18.dp)
-                            )
-                            Spacer(modifier = Modifier.width(4.dp))
-                            Text("Download PDF")
+                            Button(
+                                onClick = { /* TODO: Open PDF */ }
+                            ) {
+                                Icon(
+                                    Icons.Default.PictureAsPdf,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(18.dp)
+                                )
+                                Spacer(modifier = Modifier.width(4.dp))
+                                Text("Download PDF")
+                            }
                         }
                     }
                 }
