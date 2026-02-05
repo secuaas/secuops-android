@@ -2,7 +2,7 @@ package com.secuaas.secuops.presentation.domains
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.secuaas.secuops.data.model.DomainRecord
+import com.secuaas.secuops.data.remote.DomainRecord
 import com.secuaas.secuops.data.repository.SecuOpsRepository
 import com.secuaas.secuops.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -40,12 +40,20 @@ class DomainsViewModel @Inject constructor(
         viewModelScope.launch {
             _domainsState.value = DomainsState.Loading
             repository.getDomainRecords(
-                zone = _zoneFilter.value,
-                recordType = _typeFilter.value
+                zone = _zoneFilter.value
             ).collect { resource ->
                 _domainsState.value = when (resource) {
                     is Resource.Loading -> DomainsState.Loading
-                    is Resource.Success -> DomainsState.Success(resource.data ?: emptyList())
+                    is Resource.Success -> {
+                        val domains = resource.data ?: emptyList()
+                        // Filter by type if needed
+                        val filtered = if (_typeFilter.value != null) {
+                            domains.filter { it.type == _typeFilter.value }
+                        } else {
+                            domains
+                        }
+                        DomainsState.Success(filtered)
+                    }
                     is Resource.Error -> DomainsState.Error(resource.message ?: "Unknown error")
                 }
             }
@@ -66,11 +74,11 @@ class DomainsViewModel @Inject constructor(
         viewModelScope.launch {
             repository.deleteDomainRecord(zone, recordId).collect { resource ->
                 when (resource) {
+                    is Resource.Loading -> {}
                     is Resource.Success -> loadDomains()
                     is Resource.Error -> {
                         // Show error (could be handled with a separate state)
                     }
-                    else -> {}
                 }
             }
         }

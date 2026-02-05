@@ -14,8 +14,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import com.secuaas.secuops.data.model.BillingSummary
-import com.secuaas.secuops.data.model.Invoice
+import com.secuaas.secuops.data.remote.BillingSummary
+import com.secuaas.secuops.data.remote.Invoice
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

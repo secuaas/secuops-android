@@ -2,8 +2,8 @@ package com.secuaas.secuops.presentation.servers
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.secuaas.secuops.data.model.Server
-import com.secuaas.secuops.data.model.ServerDetail
+import com.secuaas.secuops.data.remote.Server
+import com.secuaas.secuops.data.remote.ServerDetail
 import com.secuaas.secuops.data.repository.SecuOpsRepository
 import com.secuaas.secuops.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -72,6 +72,7 @@ class ServersViewModel @Inject constructor(
         viewModelScope.launch {
             repository.rebootServer(serverId).collect { resource ->
                 when (resource) {
+                    is Resource.Loading -> {}
                     is Resource.Success -> {
                         // Reload server detail to get updated status
                         loadServerDetail(serverId)
@@ -79,7 +80,6 @@ class ServersViewModel @Inject constructor(
                     is Resource.Error -> {
                         // Show error (could be handled with a separate state)
                     }
-                    else -> {}
                 }
             }
         }

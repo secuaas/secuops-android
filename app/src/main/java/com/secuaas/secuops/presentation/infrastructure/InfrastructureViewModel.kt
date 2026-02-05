@@ -88,10 +88,14 @@ class InfrastructureViewModel @Inject constructor(
     fun loadIngresses() {
         viewModelScope.launch {
             _ingressesState.value = InfrastructureState.Loading
-            repository.getInfrastructure().collect { resource ->
+            repository.getInfrastructure(
+                type = "ingresses",
+                namespace = _selectedNamespace.value,
+                environment = _selectedEnvironment.value
+            ).collect { resource ->
                 _ingressesState.value = when (resource) {
                     is Resource.Loading -> InfrastructureState.Loading
-                    is Resource.Success -> InfrastructureState.Success(resource.data ?: emptyList())
+                    is Resource.Success -> InfrastructureState.Success(resource.data?.filterIsInstance<IngressInfo>() ?: emptyList())
                     is Resource.Error -> InfrastructureState.Error(resource.message ?: "Failed to load ingresses")
                 }
             }

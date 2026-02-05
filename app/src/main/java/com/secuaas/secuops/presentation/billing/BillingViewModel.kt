@@ -2,8 +2,8 @@ package com.secuaas.secuops.presentation.billing
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.secuaas.secuops.data.model.BillingSummary
-import com.secuaas.secuops.data.model.Invoice
+import com.secuaas.secuops.data.remote.BillingSummary
+import com.secuaas.secuops.data.remote.Invoice
 import com.secuaas.secuops.data.repository.SecuOpsRepository
 import com.secuaas.secuops.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -46,18 +46,18 @@ class BillingViewModel @Inject constructor(
             // Get summary
             repository.getBillingSummary().collect { resource ->
                 when (resource) {
+                    is Resource.Loading -> {}
                     is Resource.Success -> summary = resource.data
                     is Resource.Error -> error = resource.message
-                    else -> {}
                 }
             }
 
             // Get invoices
             repository.getInvoices().collect { resource ->
                 when (resource) {
+                    is Resource.Loading -> {}
                     is Resource.Success -> invoices = resource.data
                     is Resource.Error -> if (error == null) error = resource.message
-                    else -> {}
                 }
             }
 
