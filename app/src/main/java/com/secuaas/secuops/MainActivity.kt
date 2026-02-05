@@ -16,6 +16,12 @@ import com.secuaas.secuops.data.local.TokenManager
 import com.secuaas.secuops.presentation.applications.ApplicationsScreen
 import com.secuaas.secuops.presentation.auth.LoginScreen
 import com.secuaas.secuops.presentation.dashboard.DashboardScreen
+import com.secuaas.secuops.presentation.billing.BillingScreen
+import com.secuaas.secuops.presentation.deployments.DeploymentsScreen
+import com.secuaas.secuops.presentation.domains.DomainsScreen
+import com.secuaas.secuops.presentation.infrastructure.InfrastructureScreen
+import com.secuaas.secuops.presentation.projects.ProjectsScreen
+import com.secuaas.secuops.presentation.servers.ServersScreen
 import com.secuaas.secuops.ui.theme.SecuOpsTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -98,59 +104,39 @@ fun SecuOpsNavHost(
             )
         }
 
-        // TODO: Add other screens
         composable(Screen.Projects.route) {
-            PlaceholderScreen("Projects", onNavigateBack = { navController.popBackStack() })
+            ProjectsScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
 
         composable(Screen.Infrastructure.route) {
-            PlaceholderScreen("Infrastructure", onNavigateBack = { navController.popBackStack() })
-        }
-
-        composable(Screen.Domains.route) {
-            PlaceholderScreen("Domains", onNavigateBack = { navController.popBackStack() })
-        }
-
-        composable(Screen.Servers.route) {
-            PlaceholderScreen("Servers", onNavigateBack = { navController.popBackStack() })
-        }
-
-        composable(Screen.Billing.route) {
-            PlaceholderScreen("Billing", onNavigateBack = { navController.popBackStack() })
+            InfrastructureScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
 
         composable(Screen.Deployments.route) {
-            PlaceholderScreen("Deployments", onNavigateBack = { navController.popBackStack() })
-        }
-    }
-}
-
-@Composable
-fun PlaceholderScreen(title: String, onNavigateBack: () -> Unit) {
-    androidx.compose.material3.Scaffold(
-        topBar = {
-            androidx.compose.material3.TopAppBar(
-                title = { androidx.compose.material3.Text(title) },
-                navigationIcon = {
-                    androidx.compose.material3.IconButton(onClick = onNavigateBack) {
-                        androidx.compose.material3.Icon(
-                            androidx.compose.material.icons.Icons.Default.ArrowBack,
-                            contentDescription = "Back"
-                        )
-                    }
-                }
+            DeploymentsScreen(
+                onNavigateBack = { navController.popBackStack() }
             )
         }
-    ) { paddingValues ->
-        androidx.compose.foundation.layout.Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .androidx.compose.foundation.layout.padding(paddingValues),
-            contentAlignment = androidx.compose.ui.Alignment.Center
-        ) {
-            androidx.compose.material3.Text(
-                text = "$title - Coming Soon",
-                style = androidx.compose.material3.MaterialTheme.typography.headlineSmall
+
+        composable(Screen.Domains.route) {
+            DomainsScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+
+        composable(Screen.Servers.route) {
+            ServersScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+
+        composable(Screen.Billing.route) {
+            BillingScreen(
+                onNavigateBack = { navController.popBackStack() }
             )
         }
     }
