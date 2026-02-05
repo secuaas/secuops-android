@@ -1,11 +1,70 @@
 # Historique des Versions - SecuOps Android App
 
 ## Version Actuelle
-**0.2.0** - 2026-02-05
+**0.2.3** - 2026-02-05
 
 ---
 
 ## Versions
+
+### 0.2.3 - 2026-02-05
+**Commit:** `55b9d6d`
+**Type:** Patch - Screen properties fixes + APK build success
+
+**Changements:**
+- Adaptation BillingScreen.kt aux propriétés réelles de l'API
+  - Utilisation de currentMonth/lastMonth/yearToDate au lieu de totalCost/serversCost/etc
+  - Utilisation de invoiceNumber au lieu de reference
+  - Suppression des propriétés inexistantes (periodStart, periodEnd, dueDate, description)
+  - Gestion correcte du pdfUrl nullable
+- Adaptation DomainsScreen.kt aux propriétés réelles
+  - Utilisation de type au lieu de fieldType
+  - Utilisation de zone/subdomain/createdAt au lieu de ttl/subDomain
+- Adaptation ServersScreen.kt aux propriétés réelles
+  - Utilisation de provider au lieu de region
+  - Utilisation de ip au lieu de ipAddress
+  - Correction des types Int pour cpu/ram/disk avec conversion en String
+- Ajout @OptIn(ExperimentalMaterial3Api::class) sur FilterDialog
+
+**Tests effectués:**
+- ✅ Build Kotlin complet sans erreurs
+- ✅ APK debug généré avec succès (18 MB)
+- ✅ Toutes les propriétés API matchent les data classes
+- ⏳ Test sur émulateur/device (prochain step)
+
+---
+
+### 0.2.2 - 2026-02-05
+**Commit:** `b988eb3`
+**Type:** Patch - Data class imports fix
+
+**Changements:**
+- Suppression des data classes dupliquées (BillingModels.kt, DomainModels.kt, ServerModels.kt)
+- Correction de tous les imports pour utiliser data.remote.* au lieu de data.model.*
+- Ajout des cas Resource.Loading manquants dans tous les ViewModels
+- Ajout des méthodes manquantes dans SecuOpsRepository.kt
+
+**Tests effectués:**
+- ✅ Réduction des erreurs de ~100+ à ~29 erreurs
+- ✅ Résolution des conflits de types
+- ✅ Build progresse à 70%
+
+---
+
+### 0.2.1 - 2026-02-05
+**Commit:** `4e80f9e`
+**Type:** Patch - XML syntax fixes
+
+**Changements:**
+- Correction des balises XML (`</Column>`) dans les fichiers Kotlin Compose
+- Remplacement de toutes les balises XML par des accolades fermantes `}`
+- Fichiers corrigés: ApplicationsScreen, BillingScreen, InfrastructureScreen, ProjectsScreen, ServersScreen
+
+**Tests effectués:**
+- ✅ Réduction des erreurs de syntaxe Kotlin
+- ✅ Build progresse davantage
+
+---
 
 ### 0.2.0 - 2026-02-05
 **Commit:** `05fbdcd` + `ec8556d`
@@ -177,6 +236,9 @@
 
 | Version | Commit Hash | Date | Description |
 |---------|-------------|------|-------------|
+| 0.2.3 | 55b9d6d | 2026-02-05 | Screen properties fixes + APK build success |
+| 0.2.2 | b988eb3 | 2026-02-05 | Data class imports fix |
+| 0.2.1 | 4e80f9e | 2026-02-05 | XML syntax fixes in Compose |
 | 0.2.0 | ec8556d | 2026-02-05 | Documentation + Gradle wrapper |
 | 0.2.0 | 05fbdcd | 2026-02-05 | Phase 2 - 6 modules complets |
 | 0.1.0 | 149584b | 2026-02-05 | Phase 1 - Auth + Dashboard + Applications |
