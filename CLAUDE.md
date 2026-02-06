@@ -1,5 +1,19 @@
 # SecuOps Manager - Android App
 
+## Contexte Utilisateur et Débugage
+
+**Utilisateur:** Olivier - 25 ans d'expérience, Maîtrise en informatique
+
+### Règles de Débugage
+1. **Ne JAMAIS présumer une erreur utilisateur** - Toujours chercher la cause technique
+2. **Toujours demander/analyser les logs** - Source de vérité pour comprendre les problèmes
+3. **Analyser le code** - Chercher la cause racine, pas des contournements
+4. **Être technique** - L'utilisateur comprend les détails, pas besoin de simplifier
+
+---
+
+
+
 Application Android native pour la gestion complète de l'infrastructure SecuOps.
 
 ## 🎯 Objectif
