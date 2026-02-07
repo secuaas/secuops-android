@@ -1,0 +1,10 @@
+{
+  "android": {
+    "version": "0.2.3",
+    "version_code": 3,
+    "download_url": "/binaries/secuops-android-v0.2.3.apk",
+    "changelog": "- Phase 2 Complete: 8 modules fonctionnels\n- Applications, Infrastructure, Deployments, Projects, Domains, Servers, Billing\n- 29 endpoints API intégrés (100%)\n- Architecture MVVM + Clean Architecture\n- Material3 UI avec Dark/Light mode\n- Pull-to-refresh sur tous les écrans\n- Error handling robuste avec retry\n- Build APK debug successful (18 MB)",
+    "file_size": 18874368,
+    "min_version": 1
+  }
+}
